@@ -41,3 +41,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
+
+class UserSerializer(serializers.ModelSerializer):
+
+    """Serializes the User model"""
+
+    image = serializers.SerializerMethodField("get_image")
+
+    class Meta:
+        """Meta for the UserSerializer"""
+        model = User
+        fields = ['email', 'name', 'phone', 'is_mec', 'image']
+
+
+    def get_image(self, user:User):
+        """IMAGE"""
+        file = default_storage.open(user.pic.name, 'rb')
+        data = file.read()
+        file.close()
+        return base64.b64encode(data)

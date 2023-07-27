@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:welcome/controllers/tokenController.dart';
+// import 'package:welcome/controllers/tokenController.dart';
 import 'package:welcome/models/user_profile.dart';
 import 'package:welcome/routes/routes.dart';
 import 'package:welcome/utils/custom_snackBar.dart';
 import 'package:welcome/utils/endpoints.dart';
 import 'package:welcome/utils/loading.dart';
+import 'package:welcome/utils/preferences.dart';
+// import 'package:welcome/utils/preferences.dart';
 
 class ProfileController extends GetxController {
+  Preferences preferences = Preferences();
   UserProfile? userProfile;
 
   @override
@@ -21,28 +24,36 @@ class ProfileController extends GetxController {
   var isLoading = false.obs;
 
   Future<void> getProfile() async {
-    TokenController tokenController = Get.put(TokenController());
+    Map token = await preferences.getToken();
     try {
       var headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${tokenController.token!.access}'
+        'Authorization': 'Bearer ${token['access']}'
       };
       var url =
           Uri.parse(APIEndPoints.baseURL + APIEndPoints.authEndPoints.profile);
 
-      var request = http.MultipartRequest('get', url);
+      http.Response response = await http.get(url, headers: headers);
 
-      request.headers.addAll(headers);
+      // var request = http.MultipartRequest('GET', url);
 
-      http.StreamedResponse response = await request.send();
+      // request.headers.addAll(headers);
+
+      // http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
         userProfile =
-            userProfileFromJson(await response.stream.bytesToString());
+            userProfileFromJson(response.body);
+
         isLoading(true);
+        
 
         // Check user type and route
-        Get.offNamed(Routes.mecHomePage);
+        if (userProfile!.isMec) {
+          Get.offNamed(Routes.mecHomePage);
+        } else {
+          Get.offNamed(Routes.driverPage);
+        }
       } else {
         ScaffoldMessenger.of(Get.context!)
             .showSnackBar(customSnackBar("Error: ", false));

@@ -43,29 +43,29 @@ class _registerPageState extends State<registerPage> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: inputField(
-                      const Icon(Icons.person, color: Colors.black),
-                      'Full Name',
+                      fieldIcon: const Icon(Icons.person, color: Colors.black),
+                      hintText: 'Full Name',
                       obscure: false,
                     ),
                   ),
                   inputField(
-                    const Icon(Icons.person_outline, color: Colors.black),
-                    'Email',
+                    fieldIcon: const Icon(Icons.person_outline, color: Colors.black),
+                    hintText: 'Email',
                     obscure: false,
                   ),
                   inputField(
-                    const Icon(Icons.lock, color: Colors.black),
-                    'Password',
+                    fieldIcon: const Icon(Icons.lock, color: Colors.black),
+                    hintText: 'Password',
                     obscure: true,
                   ),
                   inputField(
-                    const Icon(Icons.lock_outlined, color: Colors.black),
-                    'Confirm Password',
+                    fieldIcon: const Icon(Icons.lock_outlined, color: Colors.black),
+                    hintText: 'Confirm Password',
                     obscure: true,
                   ),
                   inputField(
-                    const Icon(Icons.mail, color: Colors.black),
-                    'Email',
+                    fieldIcon: const Icon(Icons.mail, color: Colors.black),
+                    hintText: 'Email',
                     obscure: false,
                   ),
                   Padding(

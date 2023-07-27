@@ -27,10 +27,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Static')
 SECRET_KEY = config('SECRET_KEY')
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug ]rned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.43.250", "127.0.0.1", "192.168.96.219", "192.168.43.34"]
+ALLOWED_HOSTS = ["192.168.43.250", "127.0.0.1", "192.168.96.219", "192.168.43.34","192.168.140.227"]
+# ALLOWED_HOSTS = [*]
+
 
 
 # Application definition
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'RD_auth',
     'rest_framework',
     "rest_framework_simplejwt.token_blacklist",
+    
 ]
 
 REST_FRAMEWORK = {
